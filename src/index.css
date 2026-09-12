@@ -1,0 +1,385 @@
+/* ---------- Design tokens ---------- */
+
+:root[data-theme='dark'] {
+  --bg: #0b1220;
+  --bg-soft: #0e1626;
+  --surface: #131d31;
+  --surface-hover: #182339;
+  --border: #24304a;
+  --text: #edeff4;
+  --text-dim: #8d98ae;
+  --accent: #e3a23b;
+  --accent-ink: #1a1204;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme='light'] {
+  --bg: #f5f6f8;
+  --bg-soft: #eef0f4;
+  --surface: #ffffff;
+  --surface-hover: #f8f9fb;
+  --border: #e1e4ea;
+  --text: #141a24;
+  --text-dim: #626c80;
+  --accent: #c6862b;
+  --accent-ink: #ffffff;
+  --shadow: rgba(20, 26, 36, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Entrance choreography (one orchestrated load sequence) ---------- */
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.app-header {
+  animation: riseIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.filter-panel {
+  animation: riseIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 90ms;
+}
+
+.job-list {
+  animation: riseIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 150ms;
+}
+
+.job-card {
+  animation: riseIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ---------- Layout ---------- */
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.app-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  color: var(--accent);
+  display: inline-flex;
+  animation: spin 14s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.app-header p {
+  color: var(--text-dim);
+  margin: 6px 0 28px;
+  font-size: 14.5px;
+}
+
+/* ---------- Theme toggle ---------- */
+
+.theme-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.theme-toggle-track {
+  display: flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px;
+  transition: background-color 0.2s ease;
+}
+
+:root[data-theme='dark'] .theme-toggle-track {
+  justify-content: flex-end;
+}
+
+.theme-toggle-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------- Filter panel ---------- */
+
+.filter-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.filter-panel input[type='text'],
+.filter-panel input[type='number'],
+.filter-panel select {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filter-panel input:focus,
+.filter-panel select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.filter-panel select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238d98ae'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.checkbox-label input {
+  accent-color: var(--accent);
+}
+
+.filter-panel button {
+  grid-column: span 2;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--accent-ink);
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.15s ease;
+}
+
+.filter-panel button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.filter-panel button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.filter-panel button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ---------- Job list / cards ---------- */
+
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.job-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.job-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px var(--shadow);
+  background: var(--surface-hover);
+}
+
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.job-card-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.job-source {
+  font-size: 11px;
+  color: var(--text-dim);
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+.job-company {
+  margin: 6px 0 2px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.job-meta,
+.job-date {
+  margin: 2px 0;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.job-salary {
+  margin: 6px 0 2px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ---------- Skeleton loading state ---------- */
+
+.job-card.skeleton {
+  cursor: default;
+  pointer-events: none;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg-soft) 25%, var(--border) 50%, var(--bg-soft) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-title {
+  width: 55%;
+  height: 15px;
+  margin-bottom: 10px;
+}
+
+.skeleton-sub {
+  width: 35%;
+  margin-bottom: 8px;
+}
+
+.skeleton-meta {
+  width: 45%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- Status text ---------- */
+
+.status-text {
+  color: var(--text-dim);
+  text-align: center;
+  padding: 40px 0;
+  animation: riseIn 0.4s ease both;
+}
+
+.status-text.error {
+  color: #e06767;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 480px) {
+  .filter-panel {
+    grid-template-columns: 1fr;
+  }
+  .filter-panel button {
+    grid-column: span 1;
+  }
+}
