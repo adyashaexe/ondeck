@@ -60,4 +60,4 @@ zero results instead of erroring, so the app works with only one configured.
    searches.
 2. Add sorting (date, salary, relevance).
 3. Add saved searches / filter presets.
-ok
+to be updated
