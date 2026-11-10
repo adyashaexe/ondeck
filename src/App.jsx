@@ -16,7 +16,7 @@ export default function App() {
       const results = await fetchJobs(filters)
       setJobs(results)
     } catch (err) {
-      setError('Something went wrong fetching jobs. Please try again.')
+      setError(err instanceof Error ? err.message : 'Unable to fetch jobs. Please try again.')
     } finally {
       setLoading(false)
     }
