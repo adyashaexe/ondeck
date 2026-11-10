@@ -16,31 +16,80 @@ export default function App() {
       const results = await fetchJobs(filters)
       setJobs(results)
     } catch (err) {
-      setError('Something went wrong fetching jobs.')
+      setError('Something went wrong fetching jobs. Please try again.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <div className="app-header-top">
-          <div className="brand">
+    <div className="app-shell">
+      <div className="ambient ambient-one" aria-hidden="true" />
+      <div className="ambient ambient-two" aria-hidden="true" />
+
+      <main className="app">
+        <header className="app-header">
+          <a className="brand" href="/" aria-label="Ondeck home">
             <span className="brand-mark" aria-hidden="true">
-              <svg viewBox="0 0 32 32" width="22" height="22" fill="none">
-                <circle cx="16" cy="16" r="13" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4" />
+              <svg viewBox="0 0 32 32" width="25" height="25" fill="none">
+                <circle cx="16" cy="16" r="12.5" stroke="currentColor" strokeWidth="1.7" strokeDasharray="3.5 3.5" />
                 <circle cx="16" cy="16" r="4.5" fill="currentColor" />
+                <path d="M16 1.5v4M16 26.5v4M1.5 16h4M26.5 16h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
             </span>
-            <h1>Ondeck</h1>
-          </div>
+            <span className="brand-name">ondeck<span className="brand-period">.</span></span>
+            <span className="brand-divider" aria-hidden="true" />
+            <span className="brand-caption">CAREER RADAR</span>
+          </a>
           <ThemeToggle />
-        </div>
-        <p>Filtered job search across multiple sources.</p>
-      </header>
-      <FilterPanel onSearch={handleSearch} loading={loading} />
-      <JobList jobs={jobs} loading={loading} error={error} />
+        </header>
+
+        <section className="hero">
+          <div className="hero-copy">
+            <p className="eyebrow"><span className="eyebrow-dot" /> YOUR NEXT CHAPTER STARTS HERE</p>
+            <h1>Good work.<br /><span>Better opportunities.</span></h1>
+            <p className="hero-description">
+              A more focused way to find your next role. Search across sources,
+              fine-tune what matters, and keep your momentum.
+            </p>
+          </div>
+
+          <div className="hero-aside" aria-label="Search benefits">
+            <div className="orbit-art" aria-hidden="true">
+              <span className="orbit-ring orbit-ring-one" />
+              <span className="orbit-ring orbit-ring-two" />
+              <span className="orbit-core"><span /></span>
+              <span className="orbit-point orbit-point-one" />
+              <span className="orbit-point orbit-point-two" />
+              <span className="orbit-point orbit-point-three" />
+            </div>
+            <div className="hero-aside-copy">
+              <span className="aside-kicker">A CLEARER WAY FORWARD</span>
+              <span className="aside-note">Less scrolling. More direction.</span>
+            </div>
+          </div>
+        </section>
+
+        <FilterPanel onSearch={handleSearch} loading={loading} />
+
+        <section className="results-section" aria-label="Job search results">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">THE OPPORTUNITY FEED</p>
+              <h2>Explore what’s next</h2>
+            </div>
+            <span className="results-context">
+              {loading ? 'UPDATING' : jobs.length ? `${jobs.length} MATCHES` : 'READY WHEN YOU ARE'}
+            </span>
+          </div>
+          <JobList jobs={jobs} loading={loading} error={error} />
+        </section>
+
+        <footer className="app-footer">
+          <span>ondeck<span className="brand-period">.</span></span>
+          <span>Stay curious. Keep moving.</span>
+        </footer>
+      </main>
     </div>
   )
 }
